@@ -1,10 +1,10 @@
 Communication Protocol 
-Interaction between server and client that must be possible 
+Interaction between client and server that must be possible: 
 
 ---------------------------------------------------------------------------------------------------------------------------
 Request to add user:
 - add new Person request from client
-- add new Person response from server
+- new Person request from server should be returned
 
 ---------------------------------------------------------------------------------------------------------------------------
 Request to delete user:
