@@ -1,22 +1,29 @@
 Communication Protocol 
-Interaction between server and client
+Interaction between server and client that must be possible 
 
--------------------------------------
-
+---------------------------------------------------------------------------------------------------------------------------
 Request to add user:
 - add new Person request from client
 - add new Person response from server
 
--------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
 Request to delete user:
 - delete Person entry 
 
--------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
 Request to search for user:
-- 
+- able to search for a person within the database by name or some other defined parameter
 
--------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
 Request to update user:
-- 
+- update any information fields of users within the database
+- fields of each user (Person): 
+      name 
+      place of birth, date of birth
+      place of death, date of death (if applicable)
+      biography (may not be present)
+      parents (one or both may be unknown)
+      children
+- any request to update user information will be immediately accepted by the server
 
--------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
