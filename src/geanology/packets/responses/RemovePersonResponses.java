@@ -10,5 +10,6 @@ public class RemovePersonResponses extends Packet {
 	private static final long serialVersionUID = -4595400682768282509L;
 
 	public RemovePersonResponses() {
+		
 	}
 }
