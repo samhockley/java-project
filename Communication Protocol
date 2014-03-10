@@ -25,5 +25,6 @@ Request to update user:
       parents (one or both may be unknown)
       children
 - any request to update user information will be immediately accepted by the server
+- must be able to add and/or remove parents and/or children from users
 
 ---------------------------------------------------------------------------------------------------------------------------
