@@ -20,13 +20,14 @@ public class Person implements Serializable {
 	private String place_of_birth;
 	private int mother_id;
 	private int father_id;
-	private int child_id;
+	private int[] child_id;// we are putting this in an array as there could be more than one child
+	//private int[] parent_id; 
 	
 
 
 	public Person(int person_id, String first_name, String last_name,
 			int date_of_birth, String place_of_birth, int mother_id,
-			int father_id, int child_id) {
+			int father_id, int[] child_id) {
 		super();
 		this.person_id = person_id;
 		this.first_name = first_name;
