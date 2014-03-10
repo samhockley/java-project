@@ -1,16 +1,22 @@
+Communication Protocol 
+Interaction between server and client
+
+-------------------------------------
+
 Request to add user:
+- add new Person request from client
+- add new Person response from server
 
-
------------------------------------
+-------------------------------------
 Request to delete user:
+- delete Person
+
+-------------------------------------
+Request to search for user:
 
 
------------------------------------
-Request to view user information:
+-------------------------------------
+Request to update user:
 
 
------------------------------------
-Request to edit user information:
-
-
------------------------------------
+-------------------------------------
