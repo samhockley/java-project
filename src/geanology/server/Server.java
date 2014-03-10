@@ -4,15 +4,17 @@ import java.io.IOException;
 import java.net.*;
 
 public class Server {
-
+	// Set this to false to stop the Server and shut down
+	public boolean listening = true;
+	
 	// We need to start listening for client requests:
 
 	public Server() {
 		ServerSocket serverSocket = null; // we set this below
 		try {
 			serverSocket = new ServerSocket(5678);// at port 5678
-
-			while (true) {
+			
+			while (listening) {
 				Socket socket = serverSocket.accept(); // Waiting for a client
 														// to
 														// connect. When they do
