@@ -5,11 +5,14 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/* 
+*This class (should) displays Person table by accessing PostgresSQL account. 
+*/
 
 public class DisplayDatabase {
 
 	static final String Database_URL = "jdbc:postgresql://";
-	// get URL of the database
+	// get URL of the database. 
 	
 	public static void main (String args[])
 	{
@@ -25,7 +28,8 @@ public class DisplayDatabase {
 			
 			resultSet = statement.executeQuery("SELECT person_id, first_name, last_name, " +
 					" date_of_birth, place_of_birth, Mother_ID, Father_Id, child_id, PlaceOfDeath, DateOfDeath, Bibliography FROM Person");
-			// SQL command to get all the entities from the database
+			// SQL command to get all the entities from the database 
+			// Needs to check the name of each column  
 		
 			ResultSetMetaData metaData= resultSet.getMetaData();System.out.println();
 			int numberOfColumns = metaData.getColumnCount();
