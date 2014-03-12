@@ -1,0 +1,61 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+public class DisplayDatabase {
+
+	static final String Database_URL = "jdbc:postgresql://";
+	// get URL of the database
+	
+	public static void main (String args[])
+	{
+		Connection connection= null;
+		Statement statement = null;
+		ResultSet resultSet= null;
+		
+		try
+		{
+			connection= DriverManager.getConnection(Database_URL, "username", "password");
+			//insert username and password 
+			statement = connection.createStatement();
+			
+			resultSet = statement.executeQuery("SELECT person_id, first_name, last_name, " +
+					" date_of_birth, place_of_birth, Mother_ID, Father_Id, child_id, PlaceOfDeath, DateOfDeath, Bibliography FROM Person");
+			// SQL command to get all the entities from the database
+		
+			ResultSetMetaData metaData= resultSet.getMetaData();System.out.println();
+			int numberOfColumns = metaData.getColumnCount();
+			System.out.println("People in the geanology database");
+		
+			for (int i=1; i<= numberOfColumns; i++)
+				System.out.printf("%-8s\t", metaData.getColumnName(i));
+			System.out.println();
+			
+			while( resultSet.next()){
+			for (int i=1; i<= numberOfColumns; i++)
+				System.out.printf("%-8s\t", resultSet.getObject(i));
+			System.out.println();
+			}
+		 }
+		catch (SQLException sqlException)
+		{
+			sqlException.printStackTrace();
+		}
+		finally
+		{
+			try{
+				resultSet.close();
+				statement.close();
+				connection.close();
+			   }
+			catch (Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+	}
+}
