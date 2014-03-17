@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,7 +8,7 @@ import java.sql.Statement;
 
 public class DisplayDatabase {
 
-	static final String Database_URL = "jdbc:postgresql://dbteach.cs.bham.ac.uk:5432/fundamentals";
+	static final String Database_URL = "jdbc:postgresql://dbteach2.cs.bham.ac.uk:5432/fundamentals";
 	
 	public static void main (String args[])
 	{
