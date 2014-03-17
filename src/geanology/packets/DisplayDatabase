@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -5,14 +6,10 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/* 
-*This class (should) displays Person table by accessing PostgresSQL account. 
-*/
 
 public class DisplayDatabase {
 
-	static final String Database_URL = "jdbc:postgresql://";
-	// get URL of the database. 
+	static final String Database_URL = "jdbc:postgresql://dbteach.cs.bham.ac.uk:5432/fundamentals";
 	
 	public static void main (String args[])
 	{
@@ -22,15 +19,13 @@ public class DisplayDatabase {
 		
 		try
 		{
-			connection= DriverManager.getConnection(Database_URL, "username", "password");
-			//insert username and password 
+			connection= DriverManager.getConnection(Database_URL, "bah180", "jackie");
+			
 			statement = connection.createStatement();
 			
-			resultSet = statement.executeQuery("SELECT person_id, first_name, last_name, " +
-					" date_of_birth, place_of_birth, Mother_ID, Father_Id, child_id, PlaceOfDeath, DateOfDeath, Bibliography FROM Person");
-			// SQL command to get all the entities from the database 
-			// Needs to check the name of each column  
-		
+			resultSet = statement.executeQuery("SELECT Person_ID, First_Name, Last_Name, " +
+					" Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Bibliography FROM Person");
+			
 			ResultSetMetaData metaData= resultSet.getMetaData();System.out.println();
 			int numberOfColumns = metaData.getColumnCount();
 			System.out.println("People in the geanology database");
