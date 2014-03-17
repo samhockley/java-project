@@ -69,6 +69,39 @@ public class ServerClient implements Runnable {
 
 			return response;
 		}
+		if (request instanceof RemovePersonRequest) {
+			
+			System.out.println("[Server] Received a RemovePersonRequest");
+
+			// we're casting it from a packet to an add person request
+			RemovePersonRequest theRequest = (RemovePersonRequest) request;
+
+			Person personToBeRemoved = theRequest.getPersonToBeRemoved();
+
+			// this is where we need to interact with the database and
+			// return a RemovePersonResponse with no arguments
+
+			RemovePersonResponses response = new RemovePersonResponses();
+
+			return response;
+		}
+		
+		if (request instanceof UpdatePersonRequest) {
+	
+	System.out.println("[Server] Received a UpdatePersonRequest");
+
+	// we're casting it from a packet to an update person request
+	UpdatePersonRequest theRequest = (UpdatePersonRequest) request;
+
+	Person personToBeUpdated = theRequest.getPersonUpdate();
+
+	// this is where we need to interact with the database and
+	// return an UpdatePersonResponse 
+
+	UpdatePersonResponse response = new UpdatePersonResponse(personToBeUpdated);
+
+	return response;
+}
 		return null;
 	}
 
