@@ -6,6 +6,21 @@ Request to add user:
 - add new Person request from client
 - new Person request from server should be returned
 
+private Packet getResponseForRequestFromDatabase(Packet request) {
+		if (request instanceof AddPersonRequest) {
+
+			System.out.println("[Server] Received an AddPersonRequest");
+
+			// we're casting it from a packet to an add person request
+			AddPersonRequest theRequest = (AddPersonRequest) request;
+
+			Person personToBeAdded = theRequest.getPersonToBeAdded();
+
+			// this is where we need to interact with the database and add this
+			// person
+
+			AddPersonResponse response = new AddPersonResponse(personToBeAdded);
+
 ---------------------------------------------------------------------------------------------------------------------------
 Request to delete user:
 - delete Person entry 
