@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.sql.Date;
 
 //This Person class needs to be filled out (first name, etc.)
 //this implements Serializable so that it can be converted into bytes to be sent
@@ -13,153 +14,194 @@ public class Person implements Serializable {
 *
 */
 	private static final long serialVersionUID = -1801107241608319486L;
-	private int person_id;
-	private String first_name;
-	private String last_name;
-	private int date_of_birth;
-	private String place_of_birth;
-	private int mother_id;
-	private int father_id;
-	private int[] children_id;// we are putting this in an array as there could be more than one child
-	//private int[] parent_id; 
+	private int Person_ID;
+	private String First_Name;
+	private String Last_Name;
+	private Date Date_Of_Birth;
+	private String Place_Of_Birth;
+	private int Mother_ID;
+	private int Father_ID;
+	private int[] Child_ID;
+	private String PlaceOfDeath;
+	private Date DateOfDeath;
+	private String Bibliography;
 	
+    
 
-
-	public Person(int person_id, String first_name, String last_name,
-			int date_of_birth, String place_of_birth, int mother_id,
-			int father_id, int[] children_id) {
+	public Person(int person_ID, String first_Name, String last_Name,
+			Date date_Of_Birth, String place_Of_Birth, int mother_ID,
+			int father_ID, int[] child_ID, String placeOfDeath,
+			Date dateOfDeath, String bibliography) {
 		super();
-		this.person_id = person_id;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.date_of_birth = date_of_birth;
-		this.place_of_birth = place_of_birth;
-		this.mother_id = mother_id;
-		this.father_id = father_id;
-		this.children_id = children_id;
-// TODO Auto-generated constructor stub
+		this.Person_ID = person_ID;
+		this.First_Name = first_Name;
+		this.Last_Name = last_Name;
+		this.Date_Of_Birth = date_Of_Birth;
+		this.Place_Of_Birth = place_Of_Birth;
+		this.Mother_ID = mother_ID;
+		this.Father_ID = father_ID;
+		this.Child_ID = child_ID;
+		this.PlaceOfDeath = placeOfDeath;
+		this.DateOfDeath = dateOfDeath;
+		this.Bibliography = bibliography;
 	}
 
-	/** used in testing - creates an empty person object
-	  *
-	  */
-	public Person() {
-
-	}
 
 
 	
+// TODO Auto-generated constructor stub
+	
 
-	public int getPerson_id() {
-		return person_id;
+	public int getPerson_ID() {
+	return Person_ID;
 	}
 
 
 
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirst_Name() {
+	return First_Name;
 	}
 
 
 
 
-	public String getLast_name() {
-		return last_name;
+	public String getLast_Name() {
+	return Last_Name;
 	}
 
 
 
 
-	public int getDate_of_birth() {
-		return date_of_birth;
+	public Date getDate_Of_Birth() {
+	return Date_Of_Birth;
 	}
 
 
 
 
-	public String getPlace_of_birth() {
-		return place_of_birth;
+	public String getPlace_Of_Birth() {
+	return Place_Of_Birth;
 	}
 
 
 
 
-	public int getMother_id() {
-		return mother_id;
+	public int getMother_ID() {
+	return Mother_ID;
 	}
 
 
 
 
-	public int getFather_id() {
-		return father_id;
+	public int getFather_ID() {
+	return Father_ID;
 	}
 
 
 
 
-	public int[] getChildren_id() {
-		return children_id;
+	public int[] getChild_ID() {
+	return Child_ID;
 	}
 
 
 
 
-	public void setPerson_id(int person_id) {
-		this.person_id = person_id;
+	public String getPlaceOfDeath() {
+	return PlaceOfDeath;
 	}
 
 
 
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public Date getDateOfDeath() {
+	return DateOfDeath;
 	}
 
 
 
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public String getBibliography() {
+	return Bibliography;
 	}
 
 
 
 
-	public void setDate_of_birth(int date_of_birth) {
-		this.date_of_birth = date_of_birth;
+	public void setPerson_ID(int person_ID) {
+	Person_ID = person_ID;
 	}
 
 
 
 
-	public void setPlace_of_birth(String place_of_birth) {
-		this.place_of_birth = place_of_birth;
+	public void setFirst_Name(String first_Name) {
+	First_Name = first_Name;
 	}
 
 
 
 
-	public void setMother_id(int mother_id) {
-		this.mother_id = mother_id;
+	public void setLast_Name(String last_Name) {
+	Last_Name = last_Name;
 	}
 
 
 
 
-	public void setFather_id(int father_id) {
-		this.father_id = father_id;
+	public void setDate_Of_Birth(Date date_Of_Birth) {
+	Date_Of_Birth = date_Of_Birth;
 	}
 
 
 
 
-	public void setChildren_id(int[] children_id) {
-		this.children_id = children_id;
+	public void setPlace_Of_Birth(String place_Of_Birth) {
+	Place_Of_Birth = place_Of_Birth;
 	}
 
 
+
+
+	public void setMother_ID(int mother_ID) {
+	Mother_ID = mother_ID;
+	}
+
+
+
+
+	public void setFather_ID(int father_ID) {
+	Father_ID = father_ID;
+	}
+
+
+
+
+	public void setChild_ID(int[] child_ID) {
+	Child_ID = child_ID;
+	}
+
+
+
+
+	public void setPlaceOfDeath(String placeOfDeath) {
+	PlaceOfDeath = placeOfDeath;
+	}
+
+
+
+
+	public void setDateOfDeath(Date dateOfDeath) {
+	DateOfDeath = dateOfDeath;
+	}
+
+
+
+
+	public void setBibliography(String bibliography) {
+	Bibliography = bibliography;
+	}
 
 
 /**
@@ -168,16 +210,38 @@ public class Person implements Serializable {
 */
 	private void readObject(ObjectInputStream aInputStream)
 	 throws ClassNotFoundException, IOException {
-		aInputStream.defaultReadObject();
+		Person_ID = aInputStream.readInt();
+		First_Name = (String) aInputStream.readObject();
+	    Last_Name= (String) aInputStream.readObject();;
+	    Date_Of_Birth = (Date) aInputStream.readObject();
+		Place_Of_Birth = (String) aInputStream.readObject();
+		Mother_ID = aInputStream.readInt();
+		Father_ID = aInputStream.readInt();
+	    Child_ID = (int[]) aInputStream.readObject();
+		PlaceOfDeath = (String) aInputStream.readObject();
+		DateOfDeath = (Date) aInputStream.readObject();
+		Bibliography = (String) aInputStream.readObject();
+		
 	}
 
+
 /**
-* This is the default implementation of writeObject. Customise if
-* necessary.
+*  writeObject method for serialization. 
 */
 	private void writeObject(ObjectOutputStream aOutputStream)
      throws IOException {
-		aOutputStream.defaultWriteObject();
+		aOutputStream.writeInt (this.getPerson_ID());
+		aOutputStream.writeObject(this.getFirst_Name());
+		aOutputStream.writeObject(this.getLast_Name());
+		aOutputStream.writeObject(this.getDate_Of_Birth());
+		aOutputStream.writeObject(this.getPlace_Of_Birth());
+		aOutputStream.writeInt(this.getMother_ID());
+		aOutputStream.writeInt(this.getFather_ID());
+		aOutputStream.writeObject(this.getChild_ID());
+		aOutputStream.writeObject(this.getPlaceOfDeath());
+		aOutputStream.writeObject(this.getDateOfDeath());
+		aOutputStream.writeObject(this.getBibliography());
+		aOutputStream.flush();
+		aOutputStream.writeObject(this);
 	}
 }
-
