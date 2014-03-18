@@ -14,6 +14,7 @@ import java.net.*;
 public class GenealogyClient {
 
 	public static void main(String args[]) {
+		//This tests a fake client
 		Packet testAddPersonPacket = new AddPersonRequest(new Person());
 		
 		Packet response = getResponseForRequest(testAddPersonPacket);// null because we've not made a request yet

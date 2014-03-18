@@ -13,6 +13,7 @@ public class Server {
 		ServerSocket serverSocket = null; // we set this below
 		try {
 			serverSocket = new ServerSocket(5678);// at port 5678
+			System.out.println("[Server] Server running!");
 			
 			while (listening) {
 				Socket socket = serverSocket.accept(); // Waiting for a client

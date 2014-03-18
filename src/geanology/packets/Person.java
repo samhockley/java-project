@@ -1,4 +1,4 @@
-ppackage geanology.packets;
+package geanology.packets;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,14 +20,14 @@ public class Person implements Serializable {
 	private String place_of_birth;
 	private int mother_id;
 	private int father_id;
-	private int[] child_id;// we are putting this in an array as there could be more than one child
+	private int[] children_id;// we are putting this in an array as there could be more than one child
 	//private int[] parent_id; 
 	
 
 
 	public Person(int person_id, String first_name, String last_name,
 			int date_of_birth, String place_of_birth, int mother_id,
-			int father_id, int[] child_id) {
+			int father_id, int[] children_id) {
 		super();
 		this.person_id = person_id;
 		this.first_name = first_name;
@@ -36,9 +36,15 @@ public class Person implements Serializable {
 		this.place_of_birth = place_of_birth;
 		this.mother_id = mother_id;
 		this.father_id = father_id;
-		this.child_id = child_id;
-	
+		this.children_id = children_id;
 // TODO Auto-generated constructor stub
+	}
+
+	/** used in testing - creates an empty person object
+	  *
+	  */
+	public Person() {
+
 	}
 
 
@@ -93,8 +99,8 @@ public class Person implements Serializable {
 
 
 
-	public int getChild_id() {
-		return child_id;
+	public int[] getChildren_id() {
+		return children_id;
 	}
 
 
@@ -149,8 +155,8 @@ public class Person implements Serializable {
 
 
 
-	public void setChild_id(int child_id) {
-		this.child_id = child_id;
+	public void setChildren_id(int[] children_id) {
+		this.children_id = children_id;
 	}
 
 
