@@ -10,10 +10,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 
+
 // The client needs to send a packet and be able to receive a packet
 public class GenealogyClient {
 
 	public static void main(String args[]) {
+		//This tests a fake client
 		Packet testAddPersonPacket = new AddPersonRequest(new Person());
 		
 		Packet response = getResponseForRequest(testAddPersonPacket);// null because we've not made a request yet
@@ -27,7 +29,7 @@ public class GenealogyClient {
 	public static Packet getResponseForRequest(Packet request) {
 		Socket socket = null;
 		try {
-			socket = new Socket("localhost", 5678);// localhost because
+			socket = new Socket("localhost", 5678); // localhost because
 													// we're connecting
 													// to the local
 													// computer and 5678
