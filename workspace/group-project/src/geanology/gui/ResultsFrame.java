@@ -98,7 +98,7 @@ public class ResultsFrame extends JFrame {
         
         setTitle("Search results");
         pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	}
 	
 	private void printDebugData(JTable table) {

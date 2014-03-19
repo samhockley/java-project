@@ -42,7 +42,7 @@ public class WarningFrame extends JFrame {
 	 */
 	public WarningFrame() {
 		super("Delete User");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 317, 234);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,6 +69,7 @@ public class WarningFrame extends JFrame {
 		btnNewButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
 			}
 		});
 		contentPane.add(btnNewButton);

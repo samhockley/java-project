@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
@@ -43,7 +42,6 @@ public class AddPersonFrame extends JFrame {
 				try {
 					AddPersonFrame frame = new AddPersonFrame();
 					frame.setVisible(true);
-					frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,7 +55,7 @@ public class AddPersonFrame extends JFrame {
 	 */
 	public AddPersonFrame() {
 		super("Add Person");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 509, 352);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("ds");

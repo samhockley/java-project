@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.WindowConstants;
 
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SwingConstants;
@@ -47,7 +46,7 @@ public class SearchFrame extends JFrame {
 				try {
 					SearchFrame frame = new SearchFrame();
 					frame.setVisible(true);
-					frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+					frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
