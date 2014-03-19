@@ -1,0 +1,52 @@
+package MyJDBC;
+import Person;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.List;
+
+/*
+* Incompleted. 
+*/
+public class Database {
+static final String Database_URL = "jdbc:postgresql://";
+	
+	Connection connection= null;
+	Statement statement = null;
+	ResultSet resultSet= null;
+
+	public List<Person> search (Person a)
+	{
+	
+		try
+		{
+			connection= DriverManager.getConnection(Database_URL, "username", "password");
+			
+			statement = connection.createStatement();
+			
+			resultSet = statement.executeQuery("SELECT *");
+		}
+	}
+	
+	public void add (Person a)
+	{
+		connection= DriverManager.getConnection(Database_URL, "username", "password");
+		
+		statement = connection.createStatement();
+		
+		resultSet = statement.executeQuery("INSERT INTO Person """+ Person a+ " ");
+		
+	}
+	
+	public void delete (Person a)
+	{
+		
+	}
+	
+	public void edit (Person a)
+	{
+		
+	}
+}

@@ -1,0 +1,59 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+public class DisplayDatabase {
+
+	static final String Database_URL = "jdbc:postgresql://dbteach2.cs.bham.ac.uk:5432/fundamentals";
+	
+	public static void main (String args[])
+	{
+		Connection connection= null;
+		Statement statement = null;
+		ResultSet resultSet= null;
+		
+		try
+		{
+			connection= DriverManager.getConnection(Database_URL, "bah180", "jackie");
+			
+			statement = connection.createStatement();
+			
+			resultSet = statement.executeQuery("SELECT Person_ID, First_Name, Last_Name, " +
+					" Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Bibliography FROM Person");
+			
+			ResultSetMetaData metaData= resultSet.getMetaData();System.out.println();
+			int numberOfColumns = metaData.getColumnCount();
+			System.out.println("People in the geanology database");
+		
+			for (int i=1; i<= numberOfColumns; i++)
+				System.out.printf("%-8s\t", metaData.getColumnName(i));
+			System.out.println();
+			
+			while( resultSet.next()){
+			for (int i=1; i<= numberOfColumns; i++)
+				System.out.printf("%-8s\t", resultSet.getObject(i));
+			System.out.println();
+			}
+		 }
+		catch (SQLException sqlException)
+		{
+			sqlException.printStackTrace();
+		}
+		finally
+		{
+			try{
+				resultSet.close();
+				statement.close();
+				connection.close();
+			   }
+			catch (Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+	}
+}

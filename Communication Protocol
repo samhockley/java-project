@@ -1,0 +1,45 @@
+Communication Protocol 
+Interaction between client and server that must be possible: 
+
+---------------------------------------------------------------------------------------------------------------------------
+Request to add user:
+- add new Person request from client
+- new Person request from server should be returned
+
+private Packet getResponseForRequestFromDatabase(Packet request) {
+		if (request instanceof AddPersonRequest) {
+
+			System.out.println("[Server] Received an AddPersonRequest");
+
+			// we're casting it from a packet to an add person request
+			AddPersonRequest theRequest = (AddPersonRequest) request;
+
+			Person personToBeAdded = theRequest.getPersonToBeAdded();
+
+			// this is where we need to interact with the database and add this
+			// person
+
+			AddPersonResponse response = new AddPersonResponse(personToBeAdded);
+
+---------------------------------------------------------------------------------------------------------------------------
+Request to delete user:
+- delete Person entry 
+
+---------------------------------------------------------------------------------------------------------------------------
+Request to search for user:
+- able to search for a person within the database by name or some other defined parameter
+
+---------------------------------------------------------------------------------------------------------------------------
+Request to update user:
+- update any information fields of users within the database
+- fields of each user (Person): 
+      name 
+      place of birth, date of birth
+      place of death, date of death (if applicable)
+      biography (may not be present)
+      parents (one or both may be unknown)
+      children
+- any request to update user information will be immediately accepted by the server
+- must be able to add and/or remove parents and/or children from users
+
+---------------------------------------------------------------------------------------------------------------------------

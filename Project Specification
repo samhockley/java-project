@@ -1,0 +1,80 @@
+Genealogy server
+
+Design and implement (1) a genealogy tree server using a database to store the tree, and (2)
+a genealogy tree client that allows users to see and input information.
+
+Architecture of your system.
+1. A database.
+2. A server (only one copy running at a given time).
+3. A client (many copies running at a given time, in different machines).
+
+The server communicates with the database, and each client communicates with the server:
+
+
+database
+^ |
+| |
+| v
+server
+^ |
+| |
+| v
+client 1 client2 client3 client4 client5 ...
+
+1. The server will use threads in order to be able to attend concurrent requests by several
+clients, and synchonization to properly deal with them.
+http://java.sun.com/docs/books/tutorial/essential/concurrency/procthread.html
+
+2. Communication between the server and the clients will be based on sockets.
+http://java.sun.com/docs/books/tutorial/networking/sockets/
+
+3. Communication between the server and the database will be based on JDBC and the
+School’s PostgreSQL database server.
+http://java.sun.com/docs/books/tutorial/jdbc/
+http://supportweb.cs.bham.ac.uk/information/projects.php
+
+4. The client user interface will be based on Swing, and you may use Model classes such
+as ListModel.
+http://java.sun.com/docs/books/tutorial/uiswing/
+http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/ListModel.html
+
+
+Specification of the client.
+The user should be able to:
+1. Search for a person, and find the following information about that person:
+(a) Name.
+(b) Place of birth, date of birth.
+(c) Place of death, date of death (if applicable).
+(d) Biography (may not be present).
+(e) Parents (one or both may be unknown).
+(f) Children.
+
+2. Navigate by clicking at parents or children.
+
+3. Add, remove, update people.
+
+4. Add and remove parents to a person.
+
+5. Add and remove children to a person.
+
+This is very similar to the Mathematical Genealogy project
+http://genealogy.math.ndsu.nodak.edu/
+
+The main difference is that your application is not going to be web based — rather than a
+browser, you will have the client communicating with the server. Another difference is that
+there is no system administrator for this, so that any request to update the database will be
+simply accepted, immediately.
+
+The client user interface.
+1. When the client starts, you are presented with a page that allows the user to enter
+details for a person. This person will be searched for. There can be zero or more people
+matching the given details. At this point, you can either click at one of those people,
+to see their page, or add a person with the same given details.
+
+2. Once you are in a person’s page, you can delete the person, update the details, add or
+remove children, or add or remove a parent, or go back to the search page.
+Server. The server should support the functionality required by the client. It is part of the
+project to design the server.
+
+Database.
+You also have to design the database, based on what is required in the client.
