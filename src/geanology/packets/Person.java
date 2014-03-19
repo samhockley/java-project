@@ -27,7 +27,10 @@ public class Person implements Serializable {
 	private String Bibliography;
 	
     
-
+	public Person() {
+		
+	}
+	
 	public Person(int person_ID, String first_Name, String last_Name,
 			Date date_Of_Birth, String place_Of_Birth, int mother_ID,
 			int father_ID, int[] child_ID, String placeOfDeath,
