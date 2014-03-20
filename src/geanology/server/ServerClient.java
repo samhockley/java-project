@@ -130,8 +130,11 @@ public class ServerClient implements Runnable {
 
 			// this is where we need to interact with the database and
 			// return an UpdatePersonResponse
+			
+			Person personJustUpdated = Database.updatePersonInDatabase(personToBeUpdated);
+			
 			UpdatePersonResponse response = new UpdatePersonResponse(
-					personToBeUpdated);
+					personJustUpdated);
 
 			return response;
 		}
