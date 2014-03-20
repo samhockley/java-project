@@ -24,7 +24,7 @@ public class ClientServer implements Runnable {
 	// final because it should never change
 	private final Socket socket;
 
-	public ServerClient(Socket socket) {
+	public ClientServer(Socket socket) {
 		System.out.println("[Server] New ClientServer object created!");
 
 		this.socket = socket;
