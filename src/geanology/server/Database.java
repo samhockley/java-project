@@ -31,5 +31,9 @@ public class Database {
 		
 	}
 
-	
+public static Person updatePersonInDatabase(Person personUpdate) {
+		return personUpdate;
+		// TODO Auto-generated method stub
+		
+	}
 }
