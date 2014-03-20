@@ -18,14 +18,14 @@ import java.net.Socket;
 
 //this is a server-side client that connects to the Client
 //this sends responses, whereas GenealogyClient sends requests
-public class ServerClient implements Runnable {
+public class ClientServer implements Runnable {
 
 	// this socket connects to one client instance
 	// final because it should never change
 	private final Socket socket;
 
 	public ServerClient(Socket socket) {
-		System.out.println("[Server] New ServerClient object created!");
+		System.out.println("[Server] New ClientServer object created!");
 
 		this.socket = socket;
 	}
