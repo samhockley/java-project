@@ -1,8 +1,5 @@
 package geanology.packets;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -204,47 +201,5 @@ public class Person implements Serializable {
 
 	public void setBibliography(String bibliography) {
 	Bibliography = bibliography;
-	}
-
-
-/**
-* Always treat de-serialization as a full-blown constructor, by validating
-* the final state of the de-serialized object.
-*/
-	private void readObject(ObjectInputStream aInputStream)
-	 throws ClassNotFoundException, IOException {
-		Person_ID = aInputStream.readInt();
-		First_Name = (String) aInputStream.readObject();
-	    Last_Name= (String) aInputStream.readObject();;
-	    Date_Of_Birth = (Date) aInputStream.readObject();
-		Place_Of_Birth = (String) aInputStream.readObject();
-		Mother_ID = aInputStream.readInt();
-		Father_ID = aInputStream.readInt();
-	    Child_ID = (int[]) aInputStream.readObject();
-		PlaceOfDeath = (String) aInputStream.readObject();
-		DateOfDeath = (Date) aInputStream.readObject();
-		Bibliography = (String) aInputStream.readObject();
-		
-	}
-
-
-/**
-*  writeObject method for serialization. 
-*/
-	private void writeObject(ObjectOutputStream aOutputStream)
-     throws IOException {
-		aOutputStream.writeInt (this.getPerson_ID());
-		aOutputStream.writeObject(this.getFirst_Name());
-		aOutputStream.writeObject(this.getLast_Name());
-		aOutputStream.writeObject(this.getDate_Of_Birth());
-		aOutputStream.writeObject(this.getPlace_Of_Birth());
-		aOutputStream.writeInt(this.getMother_ID());
-		aOutputStream.writeInt(this.getFather_ID());
-		aOutputStream.writeObject(this.getChild_ID());
-		aOutputStream.writeObject(this.getPlaceOfDeath());
-		aOutputStream.writeObject(this.getDateOfDeath());
-		aOutputStream.writeObject(this.getBibliography());
-		aOutputStream.flush();
-		aOutputStream.writeObject(this);
 	}
 }
