@@ -4,25 +4,32 @@ import geanology.packets.Packet;
 import geanology.packets.Person;
 import geanology.packets.requests.*;
 import geanology.packets.responses.AddPersonResponse;
+import geanology.packets.responses.SearchForPersonResponse;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
+import java.util.ArrayList;
 
 // The client needs to send a packet and be able to receive a packet
 public class GenealogyClient {
 
 	public static void main(String args[]) {
-		//This tests a fake client
-		Packet testAddPersonPacket = new AddPersonRequest(new Person());
+		// here we're creating a search term which only has the person ID set
+		// (we're only searching by ID)
+		Person searchTerm = new Person();
+		searchTerm.setPerson_ID(1);
 		
-		Packet response = getResponseForRequest(testAddPersonPacket);// null because we've not made a request yet
+		Packet testSearchForPersonPacket = new SearchForPersonRequest(searchTerm);
 		
-		if(response instanceof AddPersonResponse) {
-			System.out.println("[Client] Received an AddPersonResponse");
+		Packet response = getResponseForRequest(testSearchForPersonPacket);
+		
+		if(response instanceof SearchForPersonResponse) {
+			System.out.println("[Client] Received a SearchForPersonResponse");
+			ArrayList<Person> searchResults = ((SearchForPersonResponse) response).getSearchPersonResult();
+			System.out.println("[Client] It has "+searchResults.size()+" results in it!");
 		}
-		
 	}
 
 	public static Packet getResponseForRequest(Packet request) {
