@@ -21,7 +21,73 @@ public class Database {
 	 * @return
 	 */
 	public static Person addPersonToDatabase(Person personToBeAdded) {
-		// TODO Auto-generated method stub
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			stmt = connection.createStatement();
+			int idOfInsertedPerson = stmt
+					.executeUpdate(
+							"INSERT INTO newdata.person "
+									+ "(Person_ID, First_Name, Last_Name, Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Bibliography )  VALUES ("
+									+ personToBeAdded.getPerson_ID()
+									+ ","
+									+ "'"
+									+ personToBeAdded.getFirst_Name()
+									+ "',"
+									+ "'"
+									+ personToBeAdded.getLast_Name()
+									+ "',"
+									+ "'"
+									+ personToBeAdded.getDate_Of_Birth()
+									+ "',"
+									+ "'"
+									+ personToBeAdded.getPlace_Of_Birth()
+									+ "',"
+									+ personToBeAdded.getMother_ID()
+									+ ","
+									+ personToBeAdded.getFather_ID()
+									+ ","
+									+ "'"
+									// we're using this method to convert the
+									// Child_ID ints into A String, separated by
+									// pipes
+									+ intArrayToPipeSeperatedString(personToBeAdded
+											.getChild_ID())
+									+ "'"
+									+ ","
+									+ personToBeAdded.getPlaceOfDeath()
+									+ "',"
+									+ "'"
+									+ personToBeAdded.getDateOfDeath()
+									+ "',"
+									+ "'"
+									+ personToBeAdded.getBibliography()
+									+ "'"
+									+ ");", Statement.RETURN_GENERATED_KEYS);
+
+			Person personJustInsertedToSearchFor = new Person();
+			personJustInsertedToSearchFor.setPerson_ID(idOfInsertedPerson);
+
+			Person[] personJustInserted = getPeopleResultsForSearchTerm(personJustInsertedToSearchFor);
+
+			if (personJustInserted.length > 0) {
+				return personJustInserted[0];
+			} else {
+				return null;
+			}
+
+		} catch (Exception e) {
+
+		} finally {
+			try {
+				stmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 
@@ -52,7 +118,8 @@ public class Database {
 				String placeOfBirth = rs.getString("Place_Of_Birth");
 				int motherID = rs.getInt("Mother_ID");
 				int fatherID = rs.getInt("Father_ID");
-				// as we can't have Arrays in SQL, we store all the children's IDs
+				// as we can't have Arrays in SQL, we store all the children's
+				// IDs
 				// as one String, separated by 'pipes'
 				// e.g: 1354|1367
 				String[] childID = rs.getString("Child_ID").split("|");
@@ -88,17 +155,99 @@ public class Database {
 	}
 
 	public static void removePersonFromDatabase(Person personToBeRemoved) {
-		// TODO Auto-generated method stub
+		Statement stmt = null;
 
+		try {
+			stmt = connection.createStatement();
+			stmt.executeQuery("DELETE FROM newdata.person WHERE Person_ID="
+					+ personToBeRemoved.getPerson_ID() + ";");
+		} catch (Exception e) {
+
+		} finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static Person updatePersonInDatabase(Person personUpdate) {
+		Statement stmt = null;
+
+		try {
+			stmt = connection.createStatement();
+			stmt.executeQuery("UPDATE newdata.person SET " + "First_Name='"
+					+ personUpdate.getFirst_Name() + ", " + "Last_Name='"
+					+ personUpdate.getLast_Name() + ", " + "Date_Of_Birth='"
+					+ personUpdate.getDate_Of_Birth() + ", "
+					+ "Place_Of_Birth='" + personUpdate.getPlace_Of_Birth()
+					+ ", " + "Mother_ID='"
+					+ personUpdate.getMother_ID()
+					+ ", "
+					+ "Father_ID='"
+					+ personUpdate.getFather_ID()
+					+ ", "
+					+ "Child_ID='"
+					+ intArrayToPipeSeperatedString(personUpdate.getChild_ID())
+					+ ", "// change because there is the possibility of multiple
+							// child ids
+					+ "Place_Of_Death='" + personUpdate.getPlaceOfDeath()
+					+ ", " + "Date_Of_Death='" + personUpdate.getDateOfDeath()
+					+ ", " + "Bibliography='" + personUpdate.getBibliography());
+
+			Person personJustUpdatedToSearchFor = new Person();
+			personJustUpdatedToSearchFor.setPerson_ID(personUpdate
+					.getPerson_ID());
+
+			Person[] personJustUpdated = getPeopleResultsForSearchTerm(personJustUpdatedToSearchFor);
+
+			// This prevents it from crashing by making sure that the Person
+			// we're updating actually exists before returning it
+			if (personJustUpdated.length > 0) {
+				return personJustUpdated[0];
+			} else {
+				return null;
+			}
+
+		} catch (Exception e) {
+
+		} finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		return personUpdate;
 
-		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * intArrayToPipeSeperatedString
+	 * 
+	 * this converts the child id ints into a String separated by pipes
+	 * 
+	 * @param arr
+	 * @return A String of IDs separated by 'pipes': |
+	 */
+	private static String intArrayToPipeSeperatedString(int[] arr) {
+		String toReturn = new String();
+
+		for (int i = 0; i < arr.length; i++) {
+			toReturn = toReturn + arr[i] + "|";
+		}
+
+		// this removes unnecessary pipes at the end
+		toReturn = toReturn.substring(0, toReturn.length() - 1);
+		return toReturn;
+	}
+
+	// we only have to connect to the Database once so we do it here, instead of
+	// in every method
 	static {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -116,5 +265,4 @@ public class Database {
 		}
 		System.out.println("PostgreSQL JDBC Driver Registered!");
 	}
-
 }
