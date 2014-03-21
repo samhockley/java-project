@@ -23,7 +23,7 @@ public class Server {
 														// method will return a
 														// socket object.
 				System.out.println("[Server] Someone connected!");
-				ServerClient newClient = new ServerClient(socket); 
+				ClientServer newClient = new ClientServer(socket); 
 				new Thread(newClient).start();//this will start the new thread
 			}
 
