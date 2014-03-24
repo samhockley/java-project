@@ -24,14 +24,14 @@ private int Father_ID;
 private int[] Child_ID;
 private String PlaceOfDeath;
 private Date DateOfDeath;
-private String Bibliography;
+private String Biography;
 
     
 
 public Person(int person_ID, String first_Name, String last_Name,
 Date date_Of_Birth, String place_Of_Birth, int mother_ID,
 int father_ID, int[] child_ID, String placeOfDeath,
-Date dateOfDeath, String bibliography) {
+Date dateOfDeath, String biography) {
 super();
 this.Person_ID = person_ID;
 this.First_Name = first_Name;
@@ -43,7 +43,7 @@ this.Father_ID = father_ID;
 this.Child_ID = child_ID;
 this.PlaceOfDeath = placeOfDeath;
 this.DateOfDeath = dateOfDeath;
-this.Bibliography = bibliography;
+this.Bibliography = biography;
 }
 
 
@@ -122,8 +122,8 @@ return DateOfDeath;
 
 
 
-public String getBibliography() {
-return Bibliography;
+public String getBiography() {
+return Biography;
 }
 
 
@@ -199,8 +199,8 @@ DateOfDeath = dateOfDeath;
 
 
 
-public void setBibliography(String bibliography) {
-Bibliography = bibliography;
+public void setBiography(String biography) {
+Biography = biography;
 }
 
 
@@ -220,7 +220,7 @@ Father_ID = aInputStream.readInt();
 Child_ID = (int[]) aInputStream.readObject();
 PlaceOfDeath = (String) aInputStream.readObject();
 DateOfDeath = (Date) aInputStream.readObject();
-Bibliography = (String) aInputStream.readObject();
+Biography = (String) aInputStream.readObject();
 
 }
 
@@ -240,7 +240,7 @@ aOutputStream.writeInt(this.getFather_ID());
 aOutputStream.writeObject(this.getChild_ID());
 aOutputStream.writeObject(this.getPlaceOfDeath());
 aOutputStream.writeObject(this.getDateOfDeath());
-aOutputStream.writeObject(this.getBibliography());
+aOutputStream.writeObject(this.getBiography());
 aOutputStream.flush();
 aOutputStream.writeObject(this);
 }
