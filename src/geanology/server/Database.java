@@ -2,87 +2,87 @@ package geanology.server;
 
 import geanology.packets.Person;
 
+import java.sql.*;
+
+import SWGroup.Person;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+
+import org.postgresql.util.PSQLException;
+
 public class Database {
 
-	/**addPersonToDatabase
-	 * 
-	 * @param personToBeAdded
-	 * @return
-	 */
+    /**
+     * addPersonToDatabase
+     *
+     * @param personToBeAdded
+     * @return
+     */
+    final static String Database_URL = "jdbc:postgresql://dbteach2.cs.bham.ac.uk:5432/newdata";
+   
+   
+    public static void aux(){
+       
+    }
 	public static void addPersonToDatabase(Person personToBeAdded) {
 		/*
     	 * This method is an initial attempt. It prints out the whole database after adding person
     	 * to confirm it added new person, which is not necessary.
     	 */
         System.out.println("PostgreSQL JDBC Connection Testing");
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
-                    + "Include in your library path!");
-            e.printStackTrace();
-           
-        }
-        System.out.println("PostgreSQL JDBC Driver Registered!");
-        Connection connection = null;
-        Statement stmt = null;
-       
-        try {
-            connection = DriverManager
-                    .getConnection(
-                            "jdbc:postgresql://dbteach2.cs.bham.ac.uk:5432/bah180",
-                            "bah180", "jackie");
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("INSERT INTO newdata.person " +
-            		"(Person_ID, First_Name, Last_Name,) "
-                    + "( Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Bibliography ) 
-                    VALUES ("+ personToBeAdded.getPerson_ID()+ "," +"'"+ personToBeAdded.getFirst_Name()+"',"+"'"
-                    + personToBeAdded.getLast_Name()+"',"+"'"+ personToBeAdded.getDate_Of_Birth()+"',"+"'"
-                    + personToBeAdded.getPlace_Of_Birth()+"',"+ personToBeAdded.getMother_ID()+","+ personToBeAdded.getFather_ID()+
-                    ","+"'{"+ personToBeAdded.getChild_ID()+"}',"+"'"+ personToBeAdded.getPlaceOfDeath()+"'," +"'"
-                    + personToBeAdded.getDateOfDeath()+"',"+"'"+ personToBeAdded.getBibliography()+"'"
-                    + ");");
-           
-            while (rs.next()) {
-               
-                int personID = rs.getInt("Person_ID");
-                String firstName = rs.getString("First_Name");
-                String lastName = rs.getString("Last_Name");
-                Date dateOfBirth = rs.getDate("Date_Of_Birth");
-                String placeOfBirth = rs.getString("Place_Of_Birth");
-                int motherID = rs.getInt("Mother_ID");
-                int fatherID = rs.getInt("Father_ID");
-                childID = rs.getArray("Child_ID");
-                String placeOfDeath = rs.getString("PlaceOfDeath");
-                Date dateOfDeath = rs.getDate("DateOfDeath");
-                String bibliography = rs.getString("Bibliography");
-                System.out.println("Person ID = " + personID);
-                System.out.println("First Name = " + firstName);
-                System.out.println("Last Name = " + lastName);
-                System.out.println("DOB = " + dateOfBirth);
-                System.out.println("Place Of Birth = " + placeOfBirth);
-                System.out.println("Mother ID = " + motherID);
-                System.out.println("Father ID = " + fatherID);
-                System.out.println("Child ID(s) = " + childID);
-                System.out.println("Place Of Death = " + placeOfDeath);
-                System.out.println("Date Of Death = " + dateOfDeath);
-                System.out.println("Extra Information = " + bibliography);
 
-               System.out.println();
-            }
-           
-           
-           
-           
-            rs.close();
-            stmt.close();
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(Database_URL, "bah180",
+                    "jackie");
+
+            statement = connection.createStatement();
+
+            statement
+                    .executeUpdate("INSERT INTO newdata.person "
+                            + "(Person_ID, First_Name, Last_Name, "
+                            + " Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Biography ) VALUES ("
+                            + personToBeAdded.getPerson_ID()
+                            + ","
+                            + "'"
+                            + personToBeAdded.getFirst_Name()
+                            + "',"
+                            + "'"
+                            + personToBeAdded.getLast_Name()
+                            + "',"
+                            + "'"
+                            + personToBeAdded.getDate_Of_Birth()
+                            + "',"
+                            + "'"
+                            + personToBeAdded.getPlace_Of_Birth()
+                            + "',"
+                            + personToBeAdded.getMother_ID()
+                            + ","
+                            + personToBeAdded.getFather_ID()
+                            + ","
+                            + "'{"
+                            + personToBeAdded.getChild_ID()
+                            + "}',"
+                            + "'"
+                            + personToBeAdded.getPlaceOfDeath()
+                            + "',"
+                            + "'"
+                            + personToBeAdded.getDateOfDeath()
+                            + "',"
+                            + "'"
+                            + personToBeAdded.getBiography() + "'" + ");");
+
+            statement.close();
             connection.close();
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
             return;
         }
-	}
+    }
 
 	/**getPeopleResultsForSearchTerm
 	 * 
@@ -92,130 +92,124 @@ public class Database {
 	
 	public static Person[] getPeopleResultsForSearchTerm(
 			Person personSearchedFor) {
-		  	Person result[];
+		  	  Person result[] = null;
+
         System.out.println("PostgreSQL JDBC Connection Testing");
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
-                    + "Include in your library path!");
-            e.printStackTrace();
-          
-        }
-        System.out.println("PostgreSQL JDBC Driver Registered!");
+
         Connection connection = null;
-        Statement stmt = null;
+        Statement statement = null;
+
         try {
-            connection = DriverManager
-                    .getConnection(
-                            "jdbc:postgresql://dbteach2.cs.bham.ac.uk:5432/bah180",
-                            "bah180", "jackie");
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT Person_ID, First_Name, Last_Name, "
-            + " Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Bibliography FROM newdata.person WHERE First_Name ="+personSearchedFor.getFirst_Name()+";");
+            connection = DriverManager.getConnection(Database_URL, "bah180",
+                    "jackie");
+
+            statement = connection.createStatement();
+
+            ResultSet rs = statement
+                    .executeQuery("SELECT (person_ID, first_Name, last_Name, "
+                            + " Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Biography) FROM newdata.person WHERE first_Name = '"
+                            + personSearchedFor.getFirst_Name() + "';");
+
+            ResultSetMetaData metaData = rs.getMetaData();
+            System.out.println();
+            int numberOfColumns = metaData.getColumnCount();
+            for (int i = 1; i <= numberOfColumns; i++)
+                System.out.printf("%-8s\t", metaData.getColumnName(i));
+
+            for (int i = 1; i <= numberOfColumns; i++)
+                System.out.printf("%-8s\t", metaData.getColumnName(i));
+
+            System.out.println();
+
             while (rs.next()) {
-               
-            	 int personID = rs.getInt("Person_ID");
-                 String firstName = rs.getString("First_Name");
-                 String lastName = rs.getString("Last_Name");
-                 Date dateOfBirth = rs.getDate("Date_Of_Birth");
-                 String placeOfBirth = rs.getString("Place_Of_Birth");
-                 int motherID = rs.getInt("Mother_ID");
-                 int fatherID = rs.getInt("Father_ID");
-                 childID = rs.getArray("Child_ID");
-                 String placeOfDeath = rs.getString("PlaceOfDeath");
-                 Date dateOfDeath = rs.getDate("DateOfDeath");
-                 String bibliography = rs.getString("Bibliography");
-            
-                 while(personID != null){
-                	 
-                 }
-               System.out.println();
+                for (int i = 1; i <= numberOfColumns; i++)
+                    System.out.printf("%-8s\t", rs.getObject(i));
+                System.out.println();
             }
-           
-           
-           
-           
-            rs.close();
-            stmt.close();
+
+            statement.close();
             connection.close();
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
-            
+            return result;
         }
-		return result;
-	}
+        System.out.println(result);
+        return result;
+    }
 
 	
 	public static void removePersonFromDatabase(Person personToBeRemoved) {
 	 System.out.println("PostgreSQL JDBC Connection Testing");
-         try {
-             Class.forName("org.postgresql.Driver");
-         } catch (ClassNotFoundException e) {
-             System.out.println("Where is your PostgreSQL JDBC Driver? "
-                     + "Include in your library path!");
-             e.printStackTrace();
-            
-         }
-         System.out.println("PostgreSQL JDBC Driver Registered!");
-         Connection connection = null;
-         Statement stmt = null;
-        
-         try {
-             connection = DriverManager
-                     .getConnection(
-                             "jdbc:postgresql://dbteach2.cs.bham.ac.uk:5432/bah180",
-                             "bah180", "jackie");
-             stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("DELETE FROM newdata.person WHERE First_name=" +
-             personToBeRemoved.getFirst_Name()     );
-            
-             while (rs.next()) {
-                
-                 int personID = rs.getInt("Person_ID");
-                 String firstName = rs.getString("First_Name");
-                 String lastName = rs.getString("Last_Name");
-                 Date dateOfBirth = rs.getDate("Date_Of_Birth");
-                 String placeOfBirth = rs.getString("Place_Of_Birth");
-                 int motherID = rs.getInt("Mother_ID");
-                 int fatherID = rs.getInt("Father_ID");
-                 childID = rs.getArray("Child_ID");
-                 String placeOfDeath = rs.getString("PlaceOfDeath");
-                 Date dateOfDeath = rs.getDate("DateOfDeath");
-                 String bibliography = rs.getString("Bibliography");
-                 System.out.println("Person ID = " + personID);
-                 System.out.println("First Name = " + firstName);
-                 System.out.println("Last Name = " + lastName);
-                 System.out.println("DOB = " + dateOfBirth);
-                 System.out.println("Place Of Birth = " + placeOfBirth);
-                 System.out.println("Mother ID = " + motherID);
-                 System.out.println("Father ID = " + fatherID);
-                 System.out.println("Child ID(s) = " + childID);
-                 System.out.println("Place Of Death = " + placeOfDeath);
-                 System.out.println("Date Of Death = " + dateOfDeath);
-                 System.out.println("Extra Information = " + bibliography);
 
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(Database_URL, "bah180",
+                    "jackie");
+
+            statement = connection.createStatement();
+
+            ResultSet rs = statement
+                    .executeQuery("DELETE FROM newdata.person WHERE first_Name = '"
+                            + personToBeRemoved.getFirst_Name() + "';");
+
+            ResultSetMetaData metaData = rs.getMetaData();
+            System.out.println();
+            int numberOfColumns = metaData.getColumnCount();
+            for (int i = 1; i <= numberOfColumns; i++)
+                System.out.printf("%-8s\t", metaData.getColumnName(i));
+
+            for (int i = 1; i <= numberOfColumns; i++)
+                System.out.printf("%-8s\t", metaData.getColumnName(i));
+            System.out.println();
+
+            while (rs.next()) {
+                for (int i = 1; i <= numberOfColumns; i++)
+                    System.out.printf("%-8s\t", rs.getObject(i));
                 System.out.println();
-             }
-            
-            
-            
-            
-             rs.close();
-             stmt.close();
-             connection.close();
-         } catch (SQLException e) {
-             System.out.println("Connection Failed! Check output console");
-             e.printStackTrace();
-             return;
-         }
+            }
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+        }
+
     }
-	}
 
 	public static Person updatePersonInDatabase(Person personUpdate) {
-		return personUpdate;
-		// TODO Auto-generated method stub
-		
+		System.out.println("PostgreSQL JDBC Connection Testing");
+
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(Database_URL, "bah180",
+                    "jackie");
+
+            statement = connection.createStatement();
+
+            statement
+                    .executeUpdate("UPDATE newdata.person SET PlaceOfDeath = '"
+                            + personUpdate.getPlaceOfDeath()
+                            + "' WHERE first_Name = 'Mollie';");
+
+            System.out.println("Connection Established!");
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+        }
+
+    }
+}
 	}
 }
