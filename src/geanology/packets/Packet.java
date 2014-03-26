@@ -6,4 +6,5 @@ public abstract class Packet implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -200190996737105460L;
+	
 }

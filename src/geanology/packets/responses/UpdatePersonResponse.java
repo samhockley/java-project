@@ -1,7 +1,11 @@
 package geanology.packets.responses;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import geanology.Person;
 import geanology.packets.Packet;
-import geanology.packets.Person;
 
 //this includes updating a person's relatives etc.
 public class UpdatePersonResponse extends Packet {
@@ -19,5 +23,13 @@ public class UpdatePersonResponse extends Packet {
 
 	public Person getUpdatedPerson() {
 		return updatedPerson;
+	}
+	
+	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+		aInputStream.defaultReadObject();
+	}
+	
+	public void writeObject(ObjectOutputStream aOutputStream) throws IOException {
+		aOutputStream.defaultWriteObject();
 	}
 }

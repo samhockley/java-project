@@ -1,13 +1,13 @@
 package geanology.server;
 
+import geanology.Person;
 import geanology.packets.Packet;
-import geanology.packets.Person;
 import geanology.packets.requests.AddPersonRequest;
 import geanology.packets.requests.RemovePersonRequest;
 import geanology.packets.requests.SearchForPersonRequest;
 import geanology.packets.requests.UpdatePersonRequest;
 import geanology.packets.responses.AddPersonResponse;
-import geanology.packets.responses.RemovePersonResponses;
+import geanology.packets.responses.RemovePersonResponse;
 import geanology.packets.responses.SearchForPersonResponse;
 import geanology.packets.responses.UpdatePersonResponse;
 
@@ -115,7 +115,7 @@ public class ClientServer implements Runnable {
 			// this is where we need to interact with the database and
 			// return a RemovePersonResponse with no arguments
 
-			RemovePersonResponses response = new RemovePersonResponses();
+			RemovePersonResponse response = new RemovePersonResponse();
 
 			return response;
 			

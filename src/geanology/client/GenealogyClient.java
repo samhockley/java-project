@@ -1,7 +1,7 @@
 package geanology.client;
 
+import geanology.Person;
 import geanology.packets.Packet;
-import geanology.packets.Person;
 import geanology.packets.requests.*;
 import geanology.packets.responses.AddPersonResponse;
 import geanology.packets.responses.SearchForPersonResponse;
@@ -28,7 +28,12 @@ public class GenealogyClient {
 		if(response instanceof SearchForPersonResponse) {
 			System.out.println("[Client] Received a SearchForPersonResponse");
 			ArrayList<Person> searchResults = ((SearchForPersonResponse) response).getSearchPersonResult();
-			System.out.println("[Client] It has "+searchResults.size()+" results in it!");
+			System.out.println("[Client] "+searchResults.size()+" results found!");
+		}
+		if(response instanceof AddPersonResponse) {
+			System.out.println("[Client] Received an AddPersonResponse");
+			Person personAdded = ((AddPersonResponse)response).getPersonAdded();
+			System.out.println("[Client] "+personAdded+" was added to the Database!");
 		}
 	}
 
@@ -42,7 +47,6 @@ public class GenealogyClient {
 													// because this is
 													// the port number
 													// of the server
-
 			ObjectOutputStream outputStream = new ObjectOutputStream(
 					socket.getOutputStream());
 			ObjectInputStream inputStream = new ObjectInputStream(

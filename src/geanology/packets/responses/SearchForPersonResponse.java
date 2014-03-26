@@ -1,8 +1,11 @@
 package geanology.packets.responses;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import geanology.Person;
 import geanology.packets.Packet;
-import geanology.packets.Person;
 
 public class SearchForPersonResponse extends Packet {
 
@@ -20,5 +23,13 @@ public class SearchForPersonResponse extends Packet {
 		
 	public SearchForPersonResponse() {
 		
+	}
+	
+	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+		aInputStream.defaultReadObject();
+	}
+	
+	public void writeObject(ObjectOutputStream aOutputStream) throws IOException {
+		aOutputStream.defaultWriteObject();
 	}
 }

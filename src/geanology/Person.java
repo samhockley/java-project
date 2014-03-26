@@ -1,5 +1,8 @@
-package geanology.packets;
+package geanology;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -21,8 +24,7 @@ public class Person implements Serializable {
 	private int[] Child_ID;
 	private String PlaceOfDeath;
 	private Date DateOfDeath;
-	private String Bibliography;
-	
+	private String biography;
     
 	public Person() {
 		
@@ -31,8 +33,7 @@ public class Person implements Serializable {
 	public Person(int person_ID, String first_Name, String last_Name,
 			Date date_Of_Birth, String place_Of_Birth, int mother_ID,
 			int father_ID, int[] child_ID, String placeOfDeath,
-			Date dateOfDeath, String bibliography) {
-		super();
+			Date dateOfDeath, String biography) {
 		this.Person_ID = person_ID;
 		this.First_Name = first_Name;
 		this.Last_Name = last_Name;
@@ -43,7 +44,7 @@ public class Person implements Serializable {
 		this.Child_ID = child_ID;
 		this.PlaceOfDeath = placeOfDeath;
 		this.DateOfDeath = dateOfDeath;
-		this.Bibliography = bibliography;
+		this.biography = biography;
 	}
 
 
@@ -118,14 +119,11 @@ public class Person implements Serializable {
 	public Date getDateOfDeath() {
 	return DateOfDeath;
 	}
-
-
-
-
-	public String getBibliography() {
-	return Bibliography;
+	
+	
+	public String getBiography() {
+	return biography;
 	}
-
 
 
 
@@ -195,11 +193,20 @@ public class Person implements Serializable {
 	public void setDateOfDeath(Date dateOfDeath) {
 	DateOfDeath = dateOfDeath;
 	}
+	
 
 
-
-
-	public void setBibliography(String bibliography) {
-	Bibliography = bibliography;
+	public void setBiography(String biography) {
+	biography = biography;
 	}
+
+
+	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+		aInputStream.defaultReadObject();
+	}
+	
+	public void writeObject(ObjectOutputStream aOutputStream) throws IOException {
+		aOutputStream.defaultWriteObject();
+	}
+			
 }
