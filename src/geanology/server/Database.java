@@ -16,16 +16,20 @@ public class Database {
 	private static Connection connection = null;
 
 	private static String addPersonStatement = "INSERT INTO newdata.person (First_Name, Last_Name, Date_Of_Birth, Place_Of_Birth, Mother_ID, Father_ID, Child_ID, PlaceOfDeath, DateOfDeath, Biography ) "
-										+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private static String searchForPersonStatement_ID = "SELECT * FROM newdata.person WHERE Person_ID = ?;";
 	private static String searchForPersonStatement_Base = "SELECT * FROM newdata.person WHERE (First_Name ILIKE ? AND Last_Name ILIKE ? AND Place_Of_Birth ILIKE ? AND PlaceOfDeath ILIKE ? AND Biography ILIKE ?";
-	private static String searchPersonStatement = searchForPersonStatement_Base+") OR (person_id = ?);";
-	private static String searchPersonStatement_M = searchForPersonStatement_Base+" AND Mother_ID=?) OR (person_id = ?);";
-	private static String searchPersonStatement_F = searchForPersonStatement_Base+" AND Father_ID=?) OR (person_id = ?);";
-	private static String searchPersonStatement_MF = searchForPersonStatement_Base+" AND Mother_ID=? AND Father_ID=?) OR (person_id = ?);";
+	private static String searchPersonStatement = searchForPersonStatement_Base
+			+ ") OR (person_id = ?);";
+	private static String searchPersonStatement_M = searchForPersonStatement_Base
+			+ " AND Mother_ID=?) OR (person_id = ?);";
+	private static String searchPersonStatement_F = searchForPersonStatement_Base
+			+ " AND Father_ID=?) OR (person_id = ?);";
+	private static String searchPersonStatement_MF = searchForPersonStatement_Base
+			+ " AND Mother_ID=? AND Father_ID=?) OR (person_id = ?);";
 
 	private static String updatePersonStatement = "UPDATE newdata.person SET First_Name=?, Last_Name=?, Date_Of_Birth=?, Place_Of_Birth=?, Mother_ID=?, Father_ID=?, Child_ID=?, PlaceOfDeath=?, DateOfDeath=?, Biography=? WHERE Person_ID=?;";
-	
+
 	/**
 	 * addPersonToDatabase
 	 * 
@@ -34,38 +38,40 @@ public class Database {
 	 */
 	public static Person addPersonToDatabase(Person personToBeAdded) {
 		try {
-			PreparedStatement prep = connection.prepareStatement(addPersonStatement, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement prep = connection.prepareStatement(
+					addPersonStatement, Statement.RETURN_GENERATED_KEYS);
 			prep.setString(1, personToBeAdded.getFirst_Name());
 			prep.setString(2, personToBeAdded.getLast_Name());
 			prep.setDate(3, personToBeAdded.getDate_Of_Birth());
 			prep.setString(4, personToBeAdded.getPlace_Of_Birth());
 			prep.setInt(5, personToBeAdded.getMother_ID());
 			prep.setInt(6, personToBeAdded.getFather_ID());
-			System.out.println(intArrayToPipeSeperatedString(personToBeAdded.getChild_ID()));
-			prep.setString(7, intArrayToPipeSeperatedString(personToBeAdded.getChild_ID()));
+			System.out.println(intArrayToPipeSeperatedString(personToBeAdded
+					.getChild_ID()));
+			prep.setString(
+					7,
+					intArrayToPipeSeperatedString(personToBeAdded.getChild_ID()));
 			prep.setString(8, personToBeAdded.getPlaceOfDeath());
 			prep.setDate(9, personToBeAdded.getDateOfDeath());
 			prep.setString(10, personToBeAdded.getBiography());
 
 			prep.executeUpdate();
-			
+
 			ResultSet rs = prep.getGeneratedKeys();
-            if(rs.next())
-            {
-                int last_inserted_id = rs.getInt("person_id");
-                System.out.println("ID: "+last_inserted_id);
-    			Person personJustInsertedToSearchFor = new Person();
-    			personJustInsertedToSearchFor.setPerson_ID(last_inserted_id);
+			if (rs.next()) {
+				int last_inserted_id = rs.getInt("person_id");
+				System.out.println("ID: " + last_inserted_id);
+				Person personJustInsertedToSearchFor = new Person();
+				personJustInsertedToSearchFor.setPerson_ID(last_inserted_id);
 
-    			Person[] personJustInserted = getPeopleResultsForSearchTerm(personJustInsertedToSearchFor);
+				Person[] personJustInserted = getPeopleResultsForSearchTerm(personJustInsertedToSearchFor);
 
-    			if (personJustInserted.length > 0) {
-    				return personJustInserted[0];
-    			} else {
-    				return null;
-    			}
-            }
-            
+				if (personJustInserted.length > 0) {
+					return personJustInserted[0];
+				} else {
+					return null;
+				}
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +81,6 @@ public class Database {
 		return null;
 	}
 
-	
 	/**
 	 * getPeopleResultsForSearchTerm
 	 * 
@@ -90,13 +95,15 @@ public class Database {
 		try {
 			PreparedStatement prep = null;
 			boolean m = false, f = false;
-			if(personSearchedFor.getMother_ID() != 0) {
+			if (personSearchedFor.getMother_ID() != 0) {
 				m = true;
 			}
-			if(personSearchedFor.getFather_ID() != 0) {
+			if (personSearchedFor.getFather_ID() != 0) {
 				f = true;
 			}
-			if(m && !f) {
+			if (personSearchedFor.getPerson_ID() != 0) {
+				prep = connection.prepareStatement(searchForPersonStatement_ID);
+			} else if (m && !f) {
 				prep = connection.prepareStatement(searchPersonStatement_M);
 			} else if (!m && f) {
 				prep = connection.prepareStatement(searchPersonStatement_F);
@@ -105,27 +112,31 @@ public class Database {
 			} else {
 				prep = connection.prepareStatement(searchPersonStatement);
 			}
-			
-			prep.setString(1, "%" + personSearchedFor.getFirst_Name() + "%");
-			prep.setString(2, "%" + personSearchedFor.getLast_Name() + "%");
-			prep.setString(3, "%" + personSearchedFor.getPlace_Of_Birth());
-			prep.setString(4, "%" + personSearchedFor.getPlaceOfDeath() + "%");
-			prep.setString(5, "%" + personSearchedFor.getBiography() + "%");
-			
-			if(m && !f) {
-				prep.setInt(6, personSearchedFor.getMother_ID());
-				prep.setInt(7, personSearchedFor.getPerson_ID());
-			} else if (!m && f) {
-				prep.setInt(6, personSearchedFor.getFather_ID());
-				prep.setInt(7, personSearchedFor.getPerson_ID());
-			} else if (m && f) {
-				prep.setInt(6, personSearchedFor.getMother_ID());
-				prep.setInt(7, personSearchedFor.getFather_ID());
-				prep.setInt(8, personSearchedFor.getPerson_ID());
+
+			if (personSearchedFor.getPerson_ID() != 0) {
+				prep.setInt(1, personSearchedFor.getPerson_ID());
 			} else {
-				prep.setInt(6, personSearchedFor.getPerson_ID());
+				prep.setString(1, "%" + personSearchedFor.getFirst_Name() + "%");
+				prep.setString(2, "%" + personSearchedFor.getLast_Name() + "%");
+				prep.setString(3, "%" + personSearchedFor.getPlace_Of_Birth());
+				prep.setString(4, "%" + personSearchedFor.getPlaceOfDeath()
+						+ "%");
+				prep.setString(5, "%" + personSearchedFor.getBiography() + "%");
+
+				if (m && !f) {
+					prep.setInt(6, personSearchedFor.getMother_ID());
+					prep.setInt(7, personSearchedFor.getPerson_ID());
+				} else if (!m && f) {
+					prep.setInt(6, personSearchedFor.getFather_ID());
+					prep.setInt(7, personSearchedFor.getPerson_ID());
+				} else if (m && f) {
+					prep.setInt(6, personSearchedFor.getMother_ID());
+					prep.setInt(7, personSearchedFor.getFather_ID());
+					prep.setInt(8, personSearchedFor.getPerson_ID());
+				} else {
+					prep.setInt(6, personSearchedFor.getPerson_ID());
+				}
 			}
-			
 
 			rs = prep.executeQuery();
 
@@ -143,15 +154,15 @@ public class Database {
 				// e.g: 1354|1367
 				String childID_str = rs.getString("Child_ID");
 				int[] childID_int = new int[0];
-				if(childID_str != null) {
-						String[] childID = childID_str.split("|");
-						childID_int = new int[childID.length];
-						for (int i = 0; i < childID.length; i++) {
-							try {
-								childID_int[i] = Integer.parseInt(childID[i]);
-							} catch(NumberFormatException e) {
-							}
+				if (childID_str != null) {
+					String[] childID = childID_str.split("|");
+					childID_int = new int[childID.length];
+					for (int i = 0; i < childID.length; i++) {
+						try {
+							childID_int[i] = Integer.parseInt(childID[i]);
+						} catch (NumberFormatException e) {
 						}
+					}
 				}
 
 				String placeOfDeath = rs.getString("PlaceOfDeath");
@@ -193,15 +204,17 @@ public class Database {
 
 	public static Person updatePersonInDatabase(Person personUpdate) {
 		try {
-			PreparedStatement prep = connection.prepareStatement(updatePersonStatement);
-			
+			PreparedStatement prep = connection
+					.prepareStatement(updatePersonStatement);
+
 			prep.setString(1, personUpdate.getFirst_Name());
 			prep.setString(2, personUpdate.getLast_Name());
 			prep.setDate(3, personUpdate.getDate_Of_Birth());
 			prep.setString(4, personUpdate.getPlace_Of_Birth());
 			prep.setInt(5, personUpdate.getMother_ID());
 			prep.setInt(6, personUpdate.getFather_ID());
-			prep.setString(7, intArrayToPipeSeperatedString(personUpdate.getChild_ID()));
+			prep.setString(7,
+					intArrayToPipeSeperatedString(personUpdate.getChild_ID()));
 			prep.setString(8, personUpdate.getPlaceOfDeath());
 			prep.setDate(9, personUpdate.getDateOfDeath());
 			prep.setString(10, personUpdate.getBiography());
@@ -226,7 +239,7 @@ public class Database {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+
 		}
 		return null;
 	}
@@ -257,8 +270,8 @@ public class Database {
 		try {
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(
-					"jdbc:postgresql://10.42.13.3:9090/newdata",
-					"bah180", "jackie");
+					"jdbc:postgresql://10.42.13.3:9090/newdata", "bah180",
+					"jackie");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Where is your PostgreSQL JDBC Driver? "
 					+ "Include in your library path!");
